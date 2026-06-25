@@ -5,8 +5,8 @@ from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTyp
 
 logging.basicConfig(level=logging.INFO)
 
-BOT_TOKEN = os.environ["BOT_TOKEN"]
-GROUP_ID = int(os.environ["GROUP_ID"])
+BOT_TOKEN = os.environ["8919676696:AAFJMiwzTnWJu5rb_vKDRjw9_AaKJyvSCQY"]
+GROUP_ID = int(os.environ["-1003898489632"])
 
 
 def extract_user_id(text: str) -> int | None:
