@@ -140,7 +140,11 @@ async def handle_group_reply(update: Update, context: ContextTypes.DEFAULT_TYPE)
         return
     if not msg.reply_to_message:
         return
-
+    if msg.reply_to_message.from_user.id != context.bot.id:
+        return
+    if msg.quote:
+        return
+        
     original_text = msg.reply_to_message.text
     user_id = extract_user_id(original_text)
 
