@@ -129,10 +129,6 @@ async def handle_user_message(update: Update, context: ContextTypes.DEFAULT_TYPE
     if not msg or msg.chat.type != "private":
         return
     
-    REQUIRED_EMOJI = "🏳️‍🌈"
-    if REQUIRED_EMOJI not in msg:
-        await msg.reply_text("Ваше сообщение слишком гетеро и поэтому не было доставлено /n Просьба добавить в сообщение 🏳️‍🌈")
-        return
     await forward_to_group(context, msg.from_user, msg)
 
 
