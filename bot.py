@@ -75,8 +75,6 @@ async def forward_to_group(context, user, original_msg: Message):
 
 
 async def forward_to_user(context, user_id: int, original_msg: Message):
-    prefix = "💬 Ответ от поддержки:\n\n"
-
     if original_msg.text:
         await context.bot.send_message(chat_id=user_id, text=f"{prefix}{original_msg.text}")
     elif original_msg.photo:
