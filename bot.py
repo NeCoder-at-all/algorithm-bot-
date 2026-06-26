@@ -23,7 +23,7 @@ async def forward_to_group(context, user, original_msg: Message):
     if original_msg.text:
         await context.bot.send_message(
             chat_id=GROUP_ID,
-            text=f"{original_msg.text}\n{caption_prefix}"
+            text=f"{original_msg.text}\n\n{caption_prefix}"
         )
     elif original_msg.photo:
         await context.bot.send_photo(
