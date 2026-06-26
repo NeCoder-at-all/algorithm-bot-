@@ -76,36 +76,36 @@ async def forward_to_group(context, user, original_msg: Message):
 
 async def forward_to_user(context, user_id: int, original_msg: Message):
     if original_msg.text:
-        await context.bot.send_message(chat_id=user_id, text=f"{prefix}{original_msg.text}")
+        await context.bot.send_message(chat_id=user_id, text=f"{original_msg.text}")
     elif original_msg.photo:
         await context.bot.send_photo(
             chat_id=user_id,
             photo=original_msg.photo[-1].file_id,
-            caption=f"{prefix}{original_msg.caption or ''}"
+            caption=f"{original_msg.caption or ''}"
         )
     elif original_msg.document:
         await context.bot.send_document(
             chat_id=user_id,
             document=original_msg.document.file_id,
-            caption=f"{prefix}{original_msg.caption or ''}"
+            caption=f"{original_msg.caption or ''}"
         )
     elif original_msg.video:
         await context.bot.send_video(
             chat_id=user_id,
             video=original_msg.video.file_id,
-            caption=f"{prefix}{original_msg.caption or ''}"
+            caption=f"{original_msg.caption or ''}"
         )
     elif original_msg.voice:
         await context.bot.send_voice(
             chat_id=user_id,
             voice=original_msg.voice.file_id,
-            caption=f"{prefix}{original_msg.caption or ''}"
+            caption=f"{original_msg.caption or ''}"
         )
     elif original_msg.audio:
         await context.bot.send_audio(
             chat_id=user_id,
             audio=original_msg.audio.file_id,
-            caption=f"{prefix}{original_msg.caption or ''}"
+            caption=f"{original_msg.caption or ''}"
         )
     elif original_msg.sticker:
         await context.bot.send_message(chat_id=user_id, text=prefix)
