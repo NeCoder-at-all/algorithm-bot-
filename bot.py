@@ -18,7 +18,7 @@ def extract_user_id(text: str) -> int | None:
 async def forward_to_group(context, user, original_msg: Message):
     tag = f"@{user.username}" if user.username else f"{user.first_name} (id:{user.id})"
     # id всегда в подписи — даже если есть username, чтобы extract_user_id работал
-    caption_prefix = f"📩 От {tag} (id:{user.id}):\n"
+    caption_prefix = f"{tag} (id:{user.id}):\n"
 
     if original_msg.text:
         await context.bot.send_message(
@@ -132,7 +132,6 @@ async def handle_user_message(update: Update, context: ContextTypes.DEFAULT_TYPE
         return
 
     await forward_to_group(context, msg.from_user, msg)
-    await msg.reply_text("✅ Сообщение получено! Скоро ответим.")
 
 
 async def handle_group_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -142,18 +141,17 @@ async def handle_group_reply(update: Update, context: ContextTypes.DEFAULT_TYPE)
     if not msg.reply_to_message:
         return
 
-    original_text = msg.reply_to_message.text or msg.reply_to_message.caption or ""
+    original_text = msg.reply_to_message.text
     user_id = extract_user_id(original_text)
 
     if user_id:
         try:
             await forward_to_user(context, user_id, msg)
         except Exception as e:
-            await msg.reply_text(f"⚠️ Не удалось отправить: {e}")
+            await msg.reply_text(f"Не хочу {e}")
     else:
         await msg.reply_text(
-            "⚠️ Не найден ID пользователя.\n"
-            "Убедитесь что отвечаете реплаем на сообщение с пометкой (id:XXXXXX)"
+            "Че?"
         )
 
 
@@ -178,7 +176,7 @@ app.add_handler(MessageHandler(
 
 # Реплаи в группе
 app.add_handler(MessageHandler(
-    ALL_CONTENT & (filters.ChatType.GROUP | filters.ChatType.SUPERGROUP),
+    ALL_CONTENT & filters.ChatType.SUPERGROUP,
     handle_group_reply
 ))
 
