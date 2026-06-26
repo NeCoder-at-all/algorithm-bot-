@@ -19,11 +19,15 @@ async def forward_to_group(context, user, original_msg: Message):
     tag = f"@{user.username}" if user.username else f"{user.first_name} (id:{user.id})"
     # id всегда в подписи — даже если есть username, чтобы extract_user_id работал
     caption_prefix = f"{tag} (id:{user.id}):\n"
-
+    REQUIRED_EMOJI = "🏳️‍🌈"
+    
     if original_msg.text:
+        if REQUIRED_EMOJI not in msg.text:
+            await msg.reply_text("Ваше сообщение слишком гетеро и поэтому не было доставлено /n Просьба добавить в сообщение 🏳️‍🌈")
+            return
         await context.bot.send_message(
             chat_id=GROUP_ID,
-            text=f"{caption_prefix}\n{original_msg.text}"
+            text=f"{original_msg.text}\n{caption_prefix}"
         )
     elif original_msg.photo:
         await context.bot.send_photo(
