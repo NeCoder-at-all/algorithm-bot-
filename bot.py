@@ -22,7 +22,7 @@ async def forward_to_group(context, user, original_msg: Message):
     REQUIRED_EMOJI = "🏳️‍🌈"
     
     if original_msg.text:
-        if REQUIRED_EMOJI not in msg.text:
+        if REQUIRED_EMOJI not in original_msg.text:
             await msg.reply_text("Ваше сообщение слишком гетеро и поэтому не было доставлено /n Просьба добавить в сообщение 🏳️‍🌈")
             return
         await context.bot.send_message(
