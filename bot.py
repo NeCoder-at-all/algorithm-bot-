@@ -1,14 +1,24 @@
 import os
 import re
 import logging
+import threading
+from flask import Flask
 from telegram import Update, Message
 from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, filters, ContextTypes
+
+flask_app = Flask(__name__)
 
 logging.basicConfig(level=logging.INFO)
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 GROUP_ID = int(os.environ["GROUP_ID"])
 
+@flask_app.route("/")
+def ping():
+    return "OK"
+
+def run_bot():
+    app.run_polling()
 
 def extract_user_id(text: str) -> int | None:
     match = re.search(r"id:(\d+)", text)
@@ -182,4 +192,5 @@ app.add_handler(MessageHandler(
     handle_group_reply
 ))
 
-app.run_polling()
+threading.Thread(target=run_bot, daemon=True).start()
+flask_app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 8080)))
