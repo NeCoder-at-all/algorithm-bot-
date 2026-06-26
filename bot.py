@@ -18,7 +18,7 @@ def extract_user_id(text: str) -> int | None:
 async def forward_to_group(context, user, original_msg: Message):
     tag = f"@{user.username}" if user.username else f"{user.first_name} (id:{user.id})"
     # id всегда в подписи — даже если есть username, чтобы extract_user_id работал
-    caption_prefix = f"{user.first_name}, {tag} (#id:{user.id}):\n"
+    caption_prefix = f"{user.first_name}, {tag} (id:{user.id}):\n"
     
     if original_msg.text:
         await context.bot.send_message(
