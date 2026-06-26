@@ -188,5 +188,5 @@ ALL_CONTENT = (
 
 app = ApplicationBuilder().token(BOT_TOKEN).build()
 app.add_handler(MessageHandler(ALL_CONTENT & filters.ChatType.PRIVATE, handle_user_message))
-app.add_handler(MessageHandler(ALL_CONTENT & filters.ChatType.GROUP, handle_group_reply))
+app.add_handler(MessageHandler(ALL_CONTENT & (filters.ChatType.GROUP | filters.ChatType.SUPERGROUP), handle_group_reply))
 app.run_polling()
