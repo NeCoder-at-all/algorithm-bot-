@@ -19,12 +19,8 @@ async def forward_to_group(context, user, original_msg: Message):
     tag = f"@{user.username}" if user.username else f"{user.first_name} (id:{user.id})"
     # id всегда в подписи — даже если есть username, чтобы extract_user_id работал
     caption_prefix = f"{tag} (id:{user.id}):\n"
-    REQUIRED_EMOJI = "🏳️‍🌈"
     
     if original_msg.text:
-        if REQUIRED_EMOJI not in original_msg.text:
-            await context.bot.send_message(chat_id=user_id, text="Ваше сообщение слишком гетеро и поэтому не было доставлено /n Просьба добавить в сообщение 🏳️‍🌈")
-            return
         await context.bot.send_message(
             chat_id=GROUP_ID,
             text=f"{original_msg.text}\n{caption_prefix}"
@@ -132,7 +128,11 @@ async def handle_user_message(update: Update, context: ContextTypes.DEFAULT_TYPE
     msg = update.message
     if not msg or msg.chat.type != "private":
         return
-
+    
+    REQUIRED_EMOJI = "🏳️‍🌈"
+    if REQUIRED_EMOJI not in msg:
+        await msg.reply_text("Ваше сообщение слишком гетеро и поэтому не было доставлено /n Просьба добавить в сообщение 🏳️‍🌈")
+        return
     await forward_to_group(context, msg.from_user, msg)
 
 
