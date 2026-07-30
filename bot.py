@@ -156,6 +156,8 @@ async def handle_group_reply(update: Update, context: ContextTypes.DEFAULT_TYPE)
     original_text = msg.reply_to_message.text
     user_id = extract_user_id(original_text)
 
+    if not user_id:
+        user_id = "989796746"
     if user_id:
         try:
             await forward_to_user(context, user_id, msg)
