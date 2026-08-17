@@ -10,6 +10,7 @@ logging.basicConfig(level=logging.INFO)
 
 BOT_TOKEN = os.environ["BOT_TOKEN"]
 GROUP_ID = int(os.environ["GROUP_ID"])
+THREAD_ID = int(os.environ["THREAD_ID"])
 
 flask_app = Flask(__name__)
 
@@ -33,35 +34,41 @@ async def forward_to_group(context, user, original_msg: Message):
     if original_msg.text:
         await context.bot.send_message(
             chat_id=GROUP_ID,
+            message_thread_id=THREAD_ID,
             text=f"{original_msg.text}\n\n{caption_prefix}"
         )
     elif original_msg.photo:
         await context.bot.send_photo(
             chat_id=GROUP_ID,
+            message_thread_id=THREAD_ID,
             photo=original_msg.photo[-1].file_id,
             caption=f"{caption_prefix}{original_msg.caption or ''}"
         )
     elif original_msg.document:
         await context.bot.send_document(
             chat_id=GROUP_ID,
+            message_thread_id=THREAD_ID,
             document=original_msg.document.file_id,
             caption=f"{caption_prefix}{original_msg.caption or ''}"
         )
     elif original_msg.video:
         await context.bot.send_video(
             chat_id=GROUP_ID,
+            message_thread_id=THREAD_ID,
             video=original_msg.video.file_id,
             caption=f"{caption_prefix}{original_msg.caption or ''}"
         )
     elif original_msg.voice:
         await context.bot.send_voice(
             chat_id=GROUP_ID,
+            message_thread_id=THREAD_ID,
             voice=original_msg.voice.file_id,
             caption=f"{caption_prefix}{original_msg.caption or ''}"
         )
     elif original_msg.audio:
         await context.bot.send_audio(
             chat_id=GROUP_ID,
+            message_thread_id=THREAD_ID,
             audio=original_msg.audio.file_id,
             caption=f"{caption_prefix}{original_msg.caption or ''}"
         )
@@ -69,17 +76,20 @@ async def forward_to_group(context, user, original_msg: Message):
         await context.bot.send_message(chat_id=GROUP_ID, text=caption_prefix)
         await context.bot.send_sticker(
             chat_id=GROUP_ID,
+            message_thread_id=THREAD_ID,
             sticker=original_msg.sticker.file_id
         )
     elif original_msg.video_note:
         await context.bot.send_message(chat_id=GROUP_ID, text=caption_prefix)
         await context.bot.send_video_note(
             chat_id=GROUP_ID,
+            message_thread_id=THREAD_ID,
             video_note=original_msg.video_note.file_id
         )
     else:
         await context.bot.send_message(
             chat_id=GROUP_ID,
+            message_thread_id=THREAD_ID,
             text=f"{caption_prefix}\n[Неподдерживаемый тип сообщения]"
         )
 
