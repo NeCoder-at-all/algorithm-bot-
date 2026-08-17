@@ -73,7 +73,7 @@ async def forward_to_group(context, user, original_msg: Message):
             caption=f"{caption_prefix}{original_msg.caption or ''}"
         )
     elif original_msg.sticker:
-        await context.bot.send_message(chat_id=GROUP_ID, text=caption_prefix)
+        await context.bot.send_message(chat_id=GROUP_ID, text=caption_prefix,message_thread_id=THREAD_ID)
         await context.bot.send_sticker(
             chat_id=GROUP_ID,
             message_thread_id=THREAD_ID,
