@@ -19,6 +19,8 @@ def ping():
     return "OK"
 
 def extract_user_id(text: str) -> int | None:
+    if not text:
+        return None
     match = re.search(r"id:(\d+)", text)
     return int(match.group(1)) if match else None
 
